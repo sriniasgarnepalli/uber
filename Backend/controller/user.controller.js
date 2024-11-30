@@ -34,7 +34,6 @@ module.exports.loginUser = async (req, res, next) => {
     return res.status(400).json({ errors: errors.array() });
   }
   const { email, password } = req.body;
-  console.log(req.body, "--");
 
   const user = await userModel.findOne({ email }).select("+password");
   if (!user) {
@@ -42,7 +41,6 @@ module.exports.loginUser = async (req, res, next) => {
   }
 
   const isMatch = await user.comparePassword(password);
-  console.log(user);
 
   if (!isMatch) {
     return res.status(400).json({ message: "Invalid username or password" });
