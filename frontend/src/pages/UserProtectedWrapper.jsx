@@ -12,7 +12,6 @@ const UserProtectedWrapper = ({ children }) => {
   useEffect(() => {
     if (!token) {
       navigate("/login");
-      return;
     }
 
     axios
@@ -23,7 +22,7 @@ const UserProtectedWrapper = ({ children }) => {
       })
       .then((response) => {
         if (response.status === 200) {
-          setUser(response.data.user);
+          setUser(response.data);
           setIsLoading(false);
         }
       })
@@ -32,7 +31,7 @@ const UserProtectedWrapper = ({ children }) => {
         localStorage.removeItem("token");
         navigate("/login");
       });
-  }, [navigate, token, setUser]);
+  }, [token, navigate, setUser]);
 
   if (isLoading) {
     return <div>Loading....</div>;
